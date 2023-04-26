@@ -9,19 +9,43 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/user')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager ,PaginatorInterface $paginator,Request $request): Response
     {
-        $users = $entityManager
+        $searchTerm = $request->query->get('q');
+        $user=[];
+        if (!empty($searchTerm)) {
+            $users = $entityManager
+            ->getRepository(User::class)
+            ->findByNom($searchTerm);
+            $page = $paginator->paginate(
+                $users,
+                $request->query->getInt('page', 1),
+                3
+            );
+            
+        }
+        else{
+            $users = $entityManager
             ->getRepository(User::class)
             ->findAll();
+            $page = $paginator->paginate(
+                $users,
+                $request->query->getInt('page', 1),
+                1
+            );
+           
+        }
+        
 
-        return $this->render('user/index.html.twig', [
-            'users' => $users,
+        return $this->render('User/index.html.twig', [
+            'page' => $page,
+            'searchTerm' => $searchTerm,
         ]);
     }
 

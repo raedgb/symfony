@@ -45,11 +45,11 @@ https://templatemo.com/tm-573-eduwell
                           <!-- ***** Menu Start ***** -->
                           <ul class="nav">
                               <li ><a href="/" class="active">Home</a></li> 
-                              <li ><a href="reclamation/new">reclamer</a></li> 
+                              <li ><a href="{{path('app_reclamation_index')}}">reclamer</a></li> 
                               
 
-                              <li ><a href="user/new">s'inscrire</a></li> 
-                              <li ><a href="/login">se connecter</a></li> 
+                              <li ><a href="{{path('app_register')}}">s'inscrire</a></li> 
+                              <li ><a href="{{path('app_login')}}">se connecter</a></li> 
                           </ul>        
                          
                           <!-- ***** Menu End ***** -->
@@ -77,7 +77,7 @@ https://templatemo.com/tm-573-eduwell
               <form id="contact" action="" method="post">
     
                 <div class="row">
-                                             {% block body %}
+        {% block body %}
   
          {% endblock %}
                  

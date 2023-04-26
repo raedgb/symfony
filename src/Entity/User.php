@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface
+class User implements UserInterface , PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
@@ -65,7 +66,7 @@ class User implements UserInterface
      * @Assert\NotBlank(message="Password is required")
      * @Assert\Length(min="8", minMessage="Password must be more then 8 caracteres")
      */
-    private $pwd;
+    private  $pwd ;
 
     /**
      * @var \DateTime
@@ -94,6 +95,12 @@ class User implements UserInterface
      * @ORM\Column(name="role", type="string", length=0, nullable=false)
      */
     private $role;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $reset_token;
+
 
     public function getId(): ?int
     {
@@ -218,13 +225,7 @@ class User implements UserInterface
         return (string)$this->email;
     }
 
-    /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
-     */
-    public function getUsername(): string
-    {
-        return (string)$this->email;
-    }
+   
 
     /**
      * @see UserInterface
@@ -233,10 +234,21 @@ class User implements UserInterface
     {
         $role = $this->role;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
+       // $roles[] = "ROLE_USER";
+    
+        if ($role === 'admin') {
+            $roles[] = "admin";
+        } elseif ($role === 'passager') {
+            $roles[] = "passager";
+        } elseif ($role === 'livreur') {
+            $roles[] = "livreur";
+        } elseif ($role === 'conducteur') {
+            $roles[] = "conducteur";
+        }
+    
         return array_unique($roles);
     }
+    
 
     public function setRoles(array $roles): self
     {
@@ -245,15 +257,32 @@ class User implements UserInterface
         return $this;
     }
 
+
+ /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
-        return $this->pwd;
+        return (string) $this->pwd;
     }
 
-  
+    public function setPassword(string $pwd): self
+    {
+        $this->pwd = $pwd;
+
+        return $this;
+    }
+
 
     /**
      * Returning a salt is only needed, if you are not using a modern
@@ -275,5 +304,16 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    public function getResetToken(): ?string
+    {
+        return $this->reset_token;
+    }
+
+    public function setResetToken(?string $reset_token): self
+    {
+        $this->reset_token = $reset_token;
+
+        return $this;
+    }
 
 }
