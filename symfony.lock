@@ -25,6 +25,18 @@
             "./src/Repository/.gitignore"
         ]
     },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "./src/DataFixtures/AppFixtures.php"
+        ]
+    },
     "doctrine/doctrine-migrations-bundle": {
         "version": "3.2",
         "recipe": {
@@ -36,6 +48,33 @@
         "files": [
             "./config/packages/doctrine_migrations.yaml",
             "./migrations/.gitignore"
+        ]
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.9.0"
+    },
+    "knplabs/knp-snappy-bundle": {
+        "version": "1.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "c81bdcf4a9d4e7b1959071457f9608631865d381"
+        },
+        "files": [
+            "./config/packages/knp_snappy.yaml"
+        ]
+    },
+    "nucleos/dompdf-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.1",
+            "ref": "ac77a0c751bdccab42ddc73d7290719b31ecb691"
+        },
+        "files": [
+            "./config/packages/nucleos_dompdf.yaml"
         ]
     },
     "phpunit/phpunit": {
@@ -216,6 +255,9 @@
             "./config/packages/security.yaml"
         ]
     },
+    "symfony/swiftmailer-bundle": {
+        "version": "v2.3.8"
+    },
     "symfony/translation": {
         "version": "5.4",
         "recipe": {
@@ -277,6 +319,18 @@
         },
         "files": [
             "./config/packages/messenger.yaml"
+        ]
+    },
+    "symfonycasts/reset-password-bundle": {
+        "version": "1.17",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "97c1627c0384534997ae1047b93be517ca16de43"
+        },
+        "files": [
+            "./config/packages/reset_password.yaml"
         ]
     },
     "twig/extra-bundle": {

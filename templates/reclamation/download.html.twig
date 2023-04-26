@@ -1,0 +1,49 @@
+
+{# {% block title %} {{ reclamation.nom }}</h1>{% endblock %} #}
+{% block body %}
+    <h1 style="color: #757aD8" style="text-align: center">  Liste des données de {{ reclamation.nom }} :</h1>
+
+    <table >
+        <thead>
+
+            <tr>
+                <th scope="col" style="color: #b21f2d">Nom reclamation</th>
+                <td >{{ reclamation.nom }}</td>
+            </tr>
+            <tr>
+                <th scope="col" style="color: #b21f2d">prenom :</th>
+                <td>{{ reclamation.prenom }}</td>
+            </tr>
+            <tr>
+                <th scope="col" style="color: #b21f2d">email :</th>
+                <td>{{ reclamation.email }}</td>
+            </tr>
+            <tr>
+                <th scope="col" style="color: #b21f2d">numero :</th>
+                <td>{{ reclamation.tel }}</td>
+            </tr>
+            <tr>
+                <th scope="col" style="color: #b21f2d">etat :</th>
+                <td>{{ reclamation.etat }}</td>
+            </tr>
+            <tr>
+                <th scope="col" style="color: #b21f2d">description :</th>
+                <td>{{ reclamation.description	 }}</td>
+            </tr>
+            
+            
+    </table>
+
+
+  
+
+
+
+       
+    
+
+        
+
+   
+
+{% endblock %}
