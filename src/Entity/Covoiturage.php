@@ -2,150 +2,133 @@
 
 namespace App\Entity;
 
+use App\Repository\CovoiturageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
-/**
- * Covoiturage
- *
- * @ORM\Table(name="covoiturage")
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: CovoiturageRepository::class)]
 class Covoiturage
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_covoiturage", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idCovoiturage;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     * @assert\NotBlank
-     * @assert\Length(min="4", minMessage="Introduire 4 caractère au minimum")
-     * @ORM\Column(name="adresse_depart", type="string", length=50, nullable=false)
-     */
-    private $adresseDepart;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotNull(message: "L'adresse de départ ne peut pas être nulle.")]
+    private ?string $adresse_depart = null;
 
-    /**
-     * @var string
-     * @assert\NotBlank(message="Ce chaps est obligatoire")
-     * @assert\Length(min="5", minMessage="Introduire 5 caractère au minimum")
-     * @ORM\Column(name="adresse_arrive", type="string", length=50, nullable=false)
-     */
-    private $adresseArrive;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotNull(message: "L'adresse d'arrivé ne peut pas être nulle.")]
+    private ?string $adresse_arrive = null;
 
-    /**
-     * @var \DateTime
-     * @assert\NotBlank(message="Ce chaps est obligatoire")
-     * @assert\GreaterThan("today",message="La date doit superieur à la  date d'aujourd'hui")
-     * @ORM\Column(name="date_depart", type="date", nullable=false)
-     */
-    private $dateDepart;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual("today", message: "La date de départ doit être ultérieure ou égale à la date actuelle.")]
+    private ?\DateTimeInterface $date_depart = null;
 
-    /**
-     * @var string
-     * @assert\NotBlank(message="Ce chaps est obligatoire")
-     * @ORM\Column(name="heure_depart", type="string", length=50, nullable=false)
-     */
-    private $heureDepart;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotNull(message: "L'heure de départ ne peut pas être nulle.")]
+    private ?string $heure_depart = null;
 
-    /**
-     * @var int
-     * @assert\NotBlank(message="Ce chaps est obligatoire")
-     * @ORM\Column(name="nb_place", type="integer", nullable=false)
-     */
-    private $nbPlace;
+    #[ORM\Column]
+    #[Assert\Range(max: 4,min: 1,maxMessage: "Le nombre de places disponibles doit être  inférieure a 4.")]
+    #[Assert\NotNull(message: "Le nombre de places ne peut pas être nulle.")]
+    private ?int $nb_place = null;
 
-    /**
-     * @var float
-     * @assert\NotBlank(message="Ce chaps est obligatoire")
-     * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $prix;
+    #[ORM\Column]
+    #[Assert\NotNull(message: " Le prix ne peut pas être nulle.")]
+    private ?float $prix = null;
 
-    /**
-     * @var string
-     * @assert\Length(min="8", minMessage="Introduire 8 caractère au minimum")
-     * @assert\NotBlank(message="Ce chaps est obligatoire")
-     * @ORM\Column(name="description", type="string", length=50, nullable=false)
-     */
-    private $description;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotNull(message: " La description ne peut pas être nulle.")]
+    private ?string $description = null;
 
-    /**
-     * @var string
-     * @assert\Length(min="5", minMessage="Introduire 5 caractère au minimum")
-     * @ORM\Column(name="nom_conducteur", type="string", length=50, nullable=false)
-     */
-    private $nomConducteur;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotNull(message: " Le nom du conducteur  ne peut pas être nulle.")]
+    private ?string $nom_conducteur = null;
 
-    public function getIdCovoiturage(): ?int
+    #[ORM\OneToMany(mappedBy: 'covoiturage', targetEntity: Participation::class)]
+    private Collection $participation;
+    
+    #[ORM\Column]
+     private ?int $likes = 0;
+
+     #[ORM\Column]
+     private ?int $dislikes = 0;
+    public function __construct(  )
     {
-        return $this->idCovoiturage;
+        $this->participation = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getAdresseDepart(): ?string
     {
-        return $this->adresseDepart;
+        return $this->adresse_depart;
     }
 
-    public function setAdresseDepart(string $adresseDepart): self
+    public function setAdresseDepart(string $adresse_depart): self
     {
-        $this->adresseDepart = $adresseDepart;
+        $this->adresse_depart = $adresse_depart;
 
         return $this;
     }
 
     public function getAdresseArrive(): ?string
     {
-        return $this->adresseArrive;
+        return $this->adresse_arrive;
     }
 
-    public function setAdresseArrive(string $adresseArrive): self
+    public function setAdresseArrive(string $adresse_arrive): self
     {
-        $this->adresseArrive = $adresseArrive;
+        $this->adresse_arrive = $adresse_arrive;
 
         return $this;
     }
 
     public function getDateDepart(): ?\DateTimeInterface
     {
-        return $this->dateDepart;
+        return $this->date_depart ;
     }
 
-    public function setDateDepart(\DateTimeInterface $dateDepart): self
+    public function setDateDepart(\DateTimeInterface $date_depart): self
     {
-        $this->dateDepart = $dateDepart;
+        $this->date_depart = $date_depart;
 
         return $this;
     }
-
+    public function getDateDepart1(): ?string
+    {
+        return $this->date_depart ? $this->date_depart->format('Y-m-d') : null;
+    }
     public function getHeureDepart(): ?string
     {
-        return $this->heureDepart;
+        return $this->heure_depart;
     }
 
-    public function setHeureDepart(string $heureDepart): self
+    public function setHeureDepart(string $heure_depart): self
     {
-        $this->heureDepart = $heureDepart;
+        $this->heure_depart = $heure_depart;
 
         return $this;
     }
 
     public function getNbPlace(): ?int
     {
-        return $this->nbPlace;
+        return $this->nb_place;
     }
 
-    public function setNbPlace(int $nbPlace): self
+    public function setNbPlace(int $nb_place): self
     {
-        $this->nbPlace = $nbPlace;
-
+       
+        $this->nb_place = $nb_place;
+    
         return $this;
     }
 
@@ -175,15 +158,102 @@ class Covoiturage
 
     public function getNomConducteur(): ?string
     {
-        return $this->nomConducteur;
+        return $this->nom_conducteur;
     }
 
-    public function setNomConducteur(string $nomConducteur): self
+    public function setNomConducteur(string $nom_conducteur): self
     {
-        $this->nomConducteur = $nomConducteur;
+        $this->nom_conducteur = $nom_conducteur;
 
         return $this;
     }
 
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipation(): Collection
+    {
+        return $this->participation;
+    }
 
+    public function addParticipation(Participation $participation): self
+    {
+        if (!$this->participation->contains($participation)) {
+            $this->participation->add($participation);
+            $participation->setCovoiturage($this);
+            $this->nb_place--; 
+        } 
+            
+        return $this;
+
+       
+       
+    }
+
+    public function removeParticipation(Participation $participation): self
+    {
+        if ($this->participation->removeElement($participation)) {
+            // set the owning side to null (unless already changed)
+            if ($participation->getCovoiturage() === $this) {
+                $participation->setCovoiturage(null);
+            }
+
+        }
+        return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->id;
+    }
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+    
+    public function setLikes(int $likes): self
+    {
+        $this->likes = $likes;
+    
+        return $this;
+    }
+    
+    public function incrementLikes(): self
+    {
+        $this->likes++;
+    
+        return $this;
+    }
+    
+    public function decrementLikes(): self
+    {
+        $this->likes--;
+    
+        return $this;
+    }
+    
+    public function getDislikes(): ?int
+    {
+        return $this->dislikes;
+    }
+    
+    public function setDislikes(int $dislikes): self
+    {
+        $this->dislikes = $dislikes;
+    
+        return $this;
+    }
+    
+    public function incrementDislikes(): self
+    {
+        $this->dislikes++;
+    
+        return $this;
+    }
+    
+    public function decrementDislikes(): self
+    {
+        $this->dislikes--;
+    
+        return $this;
+    }
 }

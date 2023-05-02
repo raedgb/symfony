@@ -1,41 +1,10 @@
-
-
-
-{% extends 'base.html.twig' %}
+{% extends 'baseFront.html.twig' %}
 
 {% block title %}New Participation{% endblock %}
 
 {% block body %}
+    <h1>Create new Participation</h1>
 
+    {{ include('participation/_form.html.twig') }}
 
-    <h1>Add new Participation</h1>
-
-  {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
-  <table>
-<tr>
-     <td> {{form_label(form.idCovoiturage, "IdCovoiturage")}}</td>
-     <td> {{ form_widget(form.idCovoiturage) }}</td>
-    <td> {{ form_errors(form.idCovoiturage) }}</td>
-</tr>
-
-
-<tr>
-     <td> {{form_label(form.nomParticipant, "NomParticipant")}}</td>
-     <td> {{ form_widget(form.nomParticipant) }}</td>
-    <td> {{ form_errors(form.nomParticipant) }}</td>
-</tr>
-<tr>
-     <td> {{form_label(form.mail, "Mail")}}</td>
-     <td> {{ form_widget(form.mail) }}</td>
-    <td> {{ form_errors(form.mail) }}</td>
-</tr>
-
-</table>
-
-
-    <button class="btn">{{ button_label|default('Sauvegarder') }}</button>
-{{ form_end(form) }}
-
-    <a href="{{ asset('/participation/index') }}">Retour à la liste</a>
 {% endblock %}
-

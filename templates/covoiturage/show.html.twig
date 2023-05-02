@@ -1,34 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseFront.html.twig' %}
 
-{% block title %}Covoiturage{% endblock %}
-
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+{% endblock %}
 {% block body %}
-    <h1>Covoiturage</h1>
+<center><h1 style="color: #9370db; text-shadow: 2px 2px #ffa500;">Covoiturage Détails</h1></center>
 
     <table class="table">
         <tbody>
+           
             <tr>
-                <th>IdCovoiturage</th>
-                <td>{{ covoiturage.idCovoiturage }}</td>
-            </tr>
-            <tr>
-                <th>AdresseDepart</th>
+                <th>Adresse_depart</th>
                 <td>{{ covoiturage.adresseDepart }}</td>
             </tr>
             <tr>
-                <th>AdresseArrive</th>
+                <th>Adresse_arrive</th>
                 <td>{{ covoiturage.adresseArrive }}</td>
             </tr>
             <tr>
-                <th>DateDepart</th>
+                <th>Date_depart</th>
                 <td>{{ covoiturage.dateDepart ? covoiturage.dateDepart|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>HeureDepart</th>
+                <th>Heure_depart</th>
                 <td>{{ covoiturage.heureDepart }}</td>
             </tr>
             <tr>
-                <th>NbPlace</th>
+                <th>Nb_place</th>
                 <td>{{ covoiturage.nbPlace }}</td>
             </tr>
             <tr>
@@ -40,15 +38,33 @@
                 <td>{{ covoiturage.description }}</td>
             </tr>
             <tr>
-                <th>NomConducteur</th>
+                <th>Nom_conducteur</th>
                 <td>{{ covoiturage.nomConducteur }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ asset('/covoiturage/index') }}">back to list</a>
-
-    <a href="{{ path('app_covoiturage_edit', {'idCovoiturage': covoiturage.idCovoiturage}) }}">edit</a>
-
-    {{ include('covoiturage/_delete_form.html.twig') }}
+    <div style="display: flex; gap: 1rem;">
+        <a href="{{ path('app_covoiturage_index') }}"><i class="fas fa-list"></i></a>
+        <a href="{{ path('app_covoiturage_edit', {'id': covoiturage.id}) }}"><i class="fas fa-edit"></i></a>
+        <td><a href="{{ path('app_covoiturage_pdf', {'id':  covoiturage.id}) }}" class="btn btn-primary"> PDF </a></td>
+      </div>
+   <style>
+    
+    
+    table {
+        width: 500px;
+        height: 300px;
+        margin: 1rem auto;
+        border-collapse: collapse;
+        border: 1px solid black;
+        table-layout: auto;
+      }
+      
+      th, td {
+        border: 1px solid black;
+        padding: 0.5rem;
+        text-align: center;
+      }
+      <style/>
 {% endblock %}

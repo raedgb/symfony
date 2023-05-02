@@ -2,69 +2,46 @@
 
 namespace App\Entity;
 
+use App\Repository\ParticipationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Participation
- *
- * @ORM\Table(name="participation")
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: ParticipationRepository::class)]
 class Participation
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_participation", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $idParticipation;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_covoiturage", type="integer", nullable=false)
-     */
-    private $idCovoiturage;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotNull(message: " Le nom du participant ne peut pas être nulle.")]
+    private ?string $nom_participant = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_participant", type="string", length=50, nullable=false)
-     */
-    private $nomParticipant;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotNull(message: " L'adresse email ne peut pas être nulle.")]
+    #[Assert\Email(message: "L'adresse email '{{ value }}' n'est pas valide.")]
+    private ?string $mail = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mail", type="string", length=50, nullable=false)
-     */
-    private $mail;
+    #[ORM\ManyToOne(inversedBy: 'participation',fetch: 'EAGER')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "Le covoiturage ne peut pas être nul.")]
+    private ?Covoiturage $covoiturage = null;
 
-    public function getIdParticipation(): ?int
+    public function getId(): ?int
     {
-        return $this->idParticipation;
-    }
-
-    public function getIdCovoiturage(): ?int
-    {
-        return $this->idCovoiturage;
-    }
-    
-    public function setIdCovoiturage($idCovoiturage)
-    {
-        $this->idCovoiturage = $idCovoiturage;
+        return $this->id;
     }
 
     public function getNomParticipant(): ?string
     {
-        return $this->nomParticipant;
+        return $this->nom_participant;
     }
 
-    public function setNomParticipant(string $nomParticipant): self
+    public function setNomParticipant(string $nom_participant): self
     {
-        $this->nomParticipant = $nomParticipant;
+        $this->nom_participant = $nom_participant;
 
         return $this;
     }
@@ -81,5 +58,35 @@ class Participation
         return $this;
     }
 
+    public function getCovoiturage(): ?Covoiturage
+    {
+        return $this->covoiturage;
+    }
 
+    public function setCovoiturage(?Covoiturage $covoiturage): self
+    {
+        
+        $this->covoiturage = $covoiturage;
+
+        return $this;
+    }
+
+   
+
+    #[Assert\Callback]
+    public function validateMaxParticipations(ExecutionContextInterface $context, $payload)
+    {
+        $maxParticipations = 4;
+        $covoiturage = $this->getCovoiturage();
+        $participationsCount = count($covoiturage->getParticipation());
+
+        if ($participationsCount >= $maxParticipations) {
+            $context->buildViolation('Le covoiturage ne peut pas avoir plus de {{ maxParticipations }} participations.')
+                ->setParameter('{{ maxParticipations }}', $maxParticipations)
+                ->atPath('covoiturage')
+                ->addViolation();
+        }
+    }
 }
+
+
