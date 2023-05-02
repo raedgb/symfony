@@ -12,14 +12,14 @@ class CovoiturageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresse_depart')
-            ->add('adresse_arrive')
-            ->add('date_depart')
-            ->add('heure_depart')
-            ->add('nb_place')
+            ->add('adresseDepart')
+            ->add('adresseArrive')
+            ->add('dateDepart')
+            ->add('heureDepart')
+            ->add('nbPlace')
             ->add('prix')
             ->add('description')
-            ->add('nom_conducteur')
+            ->add('nomConducteur')
         ;
     }
 
