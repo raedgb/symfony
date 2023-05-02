@@ -1,0 +1,80 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+{% endblock %}
+{% block body %}
+<center><h1 style="color: #9370db; text-shadow: 2px 2px #ffa500;">Participation List</h1></center>
+    <div class="d-flex justify-content-center mt-4">
+        <div class="text-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom_participant</th>
+                <th>Mail</th>
+                <th>covoiturage détails</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in participations %}
+            <tr>
+                <td>{{ participation.nomParticipant }}</td>
+                <td>{{ participation.mail }}</td>
+                <td>Prix: {{participation.covoiturage.prix}}/Nombre de place disponible :{{participation.covoiturage.nbplace}}/Heure de départ :{{participation.covoiturage.heuredepart}}</td>
+
+                <td style="display: flex; ">
+                    <a href="{{ path('app_participation_show', {'id': participation.id}) }}"class="btn  btn-black"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('app_participation_edit', {'id': participation.id}) }}"class="btn btn-black "><i class="fas fa-edit"></i></a>
+                    {{ include('participation/_delete_form.html.twig') }}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% for flashMessage in app.flashes('success') %}
+    <div id="flash-message" class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+  {% endfor %}
+</div>
+</div>
+    <a href="{{ path('app_participation_new') }}" class="btn btn-primary btn-pink"><i class="fas fa-plus"></i>Create new</a>
+    
+     <style>
+        .mt-4 {
+            margin-top: 4rem;
+        }
+
+        table {
+            width: 90%;
+            margin: 1rem auto;
+            border-collapse: collapse;
+            border: 2px solid #ffb6c1; /* pink border */
+            box-shadow: 0px 0px 10px #9370db; /* purple shadow */
+            table-layout: auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 0.5rem;
+            text-align: center;
+            white-space: nowrap;     
+            font-size: 1em; /* augmente la taille de police à 1.2em */    
+         }
+
+         
+            .btn-pink {
+                background-color: #ffb6c1;
+                border-color: #ffb6c1;
+              }
+              .btn-purple {
+                background-color: #9370db;
+                border-color: #9370db;
+              }
+    </style>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Edit Covoiturage{% endblock %}
+
+{% block body %}
+<center><h1 style="color: #9370db; text-shadow: 2px 2px #ffa500;"> Edit Covoiturage </h1></center>
+
+    {{ include('covoiturage/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participation index{% endblock %}
+
+{% block body %}
+    <h1>Participation Admin</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom_participant</th>
+                <th>Mail</th>
+                <th>covoiturage détails</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in participations %}
+            <tr>
+                <td>{{ participation.nomParticipant }}</td>
+                <td>{{ participation.mail }}</td>
+                <td>{{ participation.covoiturage.description}},{{participation.covoiturage.prix}},{{participation.covoiturage.nbplace}}</td>
+
+                <td>
+                    {{ include('participation/_delte_form_back.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

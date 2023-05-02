@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  
+  {% if participations is not empty %}
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        {% for participation in participations %}
+          <tr>
+            <td>{{ participation.nomParticipant }}</td>
+            <td>{{ participation.mail }}</td>
+
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Aucune participation pour ce covoiturage.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'baseFront.html.twig' %}
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+{% endblock %}
+{% block body %}
+<center><h1 style="color: #9370db; text-shadow: 2px 2px #ffa500;">Participation Détails</h1></center>
+
+    <table class="table">
+        <tbody>
+            
+            <tr>
+                <th>Nom_participant</th>
+                <td>{{ participation.nomParticipant }}</td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td>{{ participation.mail }}</td>
+            </tr>
+            <th>Covoiturage</th>
+            <td>Prix: {{participation.covoiturage.prix}}/Nombre de place disponible :{{participation.covoiturage.nbplace}}/Heure de départ :{{participation.covoiturage.heuredepart}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="display: flex; gap: 1rem;">
+
+    <a href="{{ path('app_participation_index') }}"><i class="fas fa-list"></i></a>
+
+    <a href="{{ path('app_participation_edit', {'id': participation.id}) }}"><i class="fas fa-edit"></i></a>
+
+    </div>
+<style>
+    table {
+        width: 80%;
+        margin: 1rem auto;
+        border-collapse: collapse;
+        border: 1px solid black;
+        table-layout: auto;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 0.5rem;
+        text-align: center;
+
+      } 
+      <style/>
+{% endblock %}
