@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Covoiturage{% endblock %}
+
+{% block body %}
+    <h1>Covoiturage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdCovoiturage</th>
+                <td>{{ covoiturage.idCovoiturage }}</td>
+            </tr>
+            <tr>
+                <th>AdresseDepart</th>
+                <td>{{ covoiturage.adresseDepart }}</td>
+            </tr>
+            <tr>
+                <th>AdresseArrive</th>
+                <td>{{ covoiturage.adresseArrive }}</td>
+            </tr>
+            <tr>
+                <th>DateDepart</th>
+                <td>{{ covoiturage.dateDepart ? covoiturage.dateDepart|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>HeureDepart</th>
+                <td>{{ covoiturage.heureDepart }}</td>
+            </tr>
+            <tr>
+                <th>NbPlace</th>
+                <td>{{ covoiturage.nbPlace }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ covoiturage.prix }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ covoiturage.description }}</td>
+            </tr>
+            <tr>
+                <th>NomConducteur</th>
+                <td>{{ covoiturage.nomConducteur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ asset('/covoiturage/index') }}">back to list</a>
+
+    <a href="{{ path('app_covoiturage_edit', {'idCovoiturage': covoiturage.idCovoiturage}) }}">edit</a>
+
+    {{ include('covoiturage/_delete_form.html.twig') }}
+{% endblock %}
