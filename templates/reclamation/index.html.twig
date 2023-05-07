@@ -3,7 +3,7 @@
 {% block title %}Reclamation index{% endblock %}
 
 {% block body %}
- <form action="{{ path('app_reclamation_index') }}" method="get">
+ {# <form action="{{ path('app_reclamation_index') }}" method="get">
     <div class="input-group">
         <input type="text" class="form-control" name="q" placeholder="Search...">
         <div class="input-group-append">
@@ -12,7 +12,7 @@
             </button>
         </div>
     </div>
-</form>
+</form> #}
     <h1>Reclamations</h1>
 
     <table class="table">
@@ -43,6 +43,7 @@
                 <td>
                     <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
                     <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
+                    <a href="{{ path('app_reclamation.pdf', {'id': reclamation.id})}}">pdf</a>
                 </td>
             </tr>
         {% else %}

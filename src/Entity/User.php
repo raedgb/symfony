@@ -87,7 +87,7 @@ class User implements UserInterface , PasswordAuthenticatedUserInterface
      *
      * @ORM\Column(name="sexe", type="string", length=50, nullable=false)
      */
-    private $sexe;
+    private $sexe="Homme";
 
     /**
      * @var string
@@ -314,6 +314,40 @@ class User implements UserInterface , PasswordAuthenticatedUserInterface
         $this->reset_token = $reset_token;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $role = "ROLE_USER";
+
+        if ($this->roles) {
+            $role = $this->roles[0];
+        }
+
+        return array(
+            'id' => $this->id,
+            'email' => $this->email,
+            'roles' => $role,
+            'password' => $this->pwd,
+            'nom' => $this->nom,
+            'prenom' => $this->prenom,
+            'dateNaissance' => $this->dateNaissc->format("d-m-Y"),
+            'adresse' => $this->adresse,
+            'sexe' => $this->sexe,
+            'numtel' => $this->numtel,
+        );
+    }
+  
+    public function constructor($email, $nom, $prenom, $numtel, $dateNaissc, $adresse )
+    {
+        $this->email = $email;
+        $this->nom = $nom;
+        $this->prenom = $prenom;
+        $this->numtel = $numtel;
+        $this->dateNaissc = $dateNaissc;
+        $this->adresse = $adresse;
+       
+    
     }
 
 }

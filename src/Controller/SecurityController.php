@@ -27,31 +27,41 @@ class SecurityController extends AbstractController
     {
      
     }
-#[Route(path: '/login', name: 'app_login')]
-public function login(AuthenticationUtils $authenticationUtils): Response
+    #[Route(path: '/login', name: 'app_login')]
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
-         if ($this->getUser()) {
-             return $this->redirectToRoute('app_home');
-         }
-
+   /*     $user = $this->getUser();
+        
+        if ($user) {
+            $roles = $user->getRoles();
+    //dd($user);
+            if (in_array('admin', $roles)) {
+                return $this->redirectToRoute('app_home');
+            } elseif (in_array('passager', $roles)) {
+                return $this->redirectToRoute('app_home');
+            } elseif (in_array('livreur', $roles)) {
+                return $this->redirectToRoute('app_participation_new');
+            } elseif (in_array('conducteur', $roles)) {
+                return $this->redirectToRoute('app_home');
+            }
+        }*/
+    
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-         
+    
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
-
+    
 
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): Response
     {
-        // $this->session->invalidate();
-        // $this->get('security.token_storage')->setToken(null);
-        // $this->get('request_stack')->getCurrentRequest()->getSession()->invalidate();
-        // $this->addFlash('success', 'Vous avez été déconnecté.');
-        return $this->redirectToRoute('app_login');
+
+        return $this->redirectToRoute("app_login");
+        
     }
 
     #[Route(path: '/forgot', name: 'app_forgot')]

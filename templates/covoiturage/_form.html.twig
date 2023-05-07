@@ -1,0 +1,50 @@
+
+    {{ form_start(form, {'id': 'covoiturage-form'}) }}
+    
+        {{ form_label(form.adresse_depart, 'Adresse de départ') }}
+        {{ form_widget(form.adresse_depart, {'attr': {'class': 'form-control form-control-sm'}}) }}
+        {{ form_errors(form.adresse_depart) }}
+  
+      
+        {{ form_label(form.adresse_arrive, 'Adresse arrivé') }}
+        {{ form_widget(form.adresse_arrive, {'attr': {'class': 'form-control form-control-sm'}}) }}
+        {{ form_errors(form.adresse_arrive) }}
+      
+      
+        {{ form_label(form.heure_depart, 'Heure de départ') }}
+        {{ form_widget(form.heure_depart, {'attr': {'class': 'form-control form-control-sm'}}) }}
+        {{ form_errors(form.heure_depart) }}
+      
+      
+        {{ form_label(form.date_depart, 'Date de  départ') }}
+        {{ form_widget(form.date_depart, {'attr': {'class': 'form-control form-control-sm'}}) }}
+        {{ form_errors(form.date_depart) }}
+       
+     
+
+      
+        {{ form_label(form.nb_place, 'nombre de place  disponible') }}
+        {{ form_widget(form.nb_place, {'attr': {'class': 'form-control form-control-sm'}}) }}
+        {{ form_errors(form.nb_place) }}
+       
+      
+        {{ form_label(form.prix, ' Prix') }}
+        {{ form_widget(form.prix, {'attr': {'class': 'form-control form-control-sm'}}) }}
+        {{ form_errors(form.prix) }}
+       
+      
+        {{ form_label(form.description, 'Description ') }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm'}}) }}
+        {{ form_errors(form.description) }}
+       
+      
+        {{ form_label(form.nom_conducteur, 'Nom du conducteur ') }}
+        {{ form_widget(form.nom_conducteur, {'attr': {'class': 'form-control form-control-sm'}}) }}
+        {{ form_errors(form.nom_conducteur) }}
+       
+      <button class="btn btn-primary btn-sm" formnovalidate>{{ button_label|default('Save') }}</button>
+      <a class="btn btn-primary btn-sm" href="{{ path('app_covoiturage_index') }}" class="text-right">back to list</a>
+    {{ form_end(form) }}
+ 
+  
+

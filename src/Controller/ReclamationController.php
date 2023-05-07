@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Services\PdfService;
 use App\Repository\ReclamationRepository;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
@@ -41,7 +40,7 @@ class ReclamationController extends AbstractController
             $page = $paginator->paginate(
                 $reclamations,
                 $request->query->getInt('page', 1),
-                3
+                3 
             );
             
         }
